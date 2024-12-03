@@ -1,0 +1,6 @@
+@XAPI_HostAddress = http://localhost:5233
+
+GET {{XAPI_HostAddress}}/tweet/
+Accept: application/json
+
+###
