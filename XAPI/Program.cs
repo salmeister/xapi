@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using XAPI.Models;
+using XAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,10 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AppSettings>>().Value);
+builder.Services.AddTransient<ITweetService, TweetService>();
+builder.Services.AddHttpClient<ITweetService, TweetService>();
 
 var app = builder.Build();
 
